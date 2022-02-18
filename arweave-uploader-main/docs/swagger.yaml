@@ -1,0 +1,106 @@
+basePath: /api/v1
+definitions:
+  ccian.cc_really_arweave-api_router_v1_images.SaveImageUriReq:
+    properties:
+      uri:
+        description: 图片URI
+        type: string
+    type: object
+  e.Response:
+    properties:
+      code:
+        description: error code of this api server
+        type: integer
+      data:
+        description: data
+      field:
+        description: special field prompt, especially when an error occu
+        type: string
+      message:
+        description: error message
+        type: string
+    type: object
+  router_v1_images.SaveImageUriReq:
+    properties:
+      uri:
+        description: 图片URI
+        type: string
+    type: object
+info:
+  contact:
+    email: billzong@163.com
+    name: BillZong
+  description: This is an API server for really arweave chain. Use OpenAPI 2.0 specification.
+  title: really arweave API
+  version: 1.0.0
+paths:
+  /images:
+    post:
+      consumes:
+      - multipart/form-data
+      operationId: images-upload
+      parameters:
+      - description: 图片，文件类型目前仅支持png,jpg,jpeg
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/e.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.Response'
+      summary: upload image to arweave chain
+      tags:
+      - images
+  /images/uri:
+    post:
+      consumes:
+      - application/json
+      operationId: images-save-uri
+      parameters:
+      - description: request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/router_v1_images.SaveImageUriReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/e.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.Response'
+      summary: give image uri and resave it to arweave chain
+      tags:
+      - images
+swagger: "2.0"

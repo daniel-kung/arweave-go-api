@@ -1,0 +1,20 @@
+server:
+  mode: debug # debug, release, test
+  port: 8080
+  timeout:
+    read: 600
+    write: 600
+
+app:
+  node: https://arweave.net
+  keyfile: "./config/arweave.json"
+  image:
+    maxfilesize: 10000048576
+
+logger:
+  enable_context: false
+  level: debug # debug, info, warn, error
+  mode: stdout # "stdout" or "file"
+  file:
+    log_path: "./"
+    name_prefix: really-arweave-api-log
